@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "description": "Schema for mixins for custom attributes at products.",
+  "properties": {
+    "EAN": {
+      "type": ["string", "null"],
+      "description": "EAN"
+    },
+    "depth_mm": {
+      "type": ["number", "null"],
+      "description": "Depth mm"
+    },
+    "width_mm": {
+      "type": ["number", "null"],
+      "description": "Width mm"
+    },
+    "height_mm": {
+      "type": ["number", "null"],
+      "description": "Height mm"
+    },
+    "weight_kg_ps": {
+      "type": ["number", "null"],
+      "description": "Weight kg PS"
+    },
+    "weight_kg_product": {
+      "type": ["number", "null"],
+      "description": "Weight kg Product"
+    },
+    "pdf_data_sheet": {
+      "type": ["string", "null"],
+      "description": "PDF Data Sheet URL"
+    },
+    "link_video_youtube": {
+      "type": ["string", "null"],
+      "description": "Link video youtube"
+    },
+    "custom_code": {
+      "type": ["string", "null"],
+      "description": "Custom code"
+    },
+    "country_of_origins": {
+      "type": ["string", "null"],
+      "description": "Country of origins"
+    },
+    "lithium_battery": {
+      "type": ["boolean", "null"],
+      "description": "Lithium battery"
+    },
+    "minimum_purchase_to_customer": {
+      "type": ["number", "null"],
+      "description": "Minimum purchase to customer"
+    },
+    "pieces_per_pack": {
+      "type": ["number", "null"],
+      "description": "Pieces per pack"
+    },
+    "number_of_packs": {
+      "type": ["number", "null"],
+      "description": "Number of packs"
+    },
+    "total_pieces": {
+      "type": ["number", "null"],
+      "description": "Total pieces"
+    },
+    "blades": {
+      "type": ["boolean", "null"],
+      "description": "Blades"
+    }
+  }
+}

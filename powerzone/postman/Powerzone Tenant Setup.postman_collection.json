@@ -1,0 +1,1958 @@
+{
+	"info": {
+		"_postman_id": "e97adb97-0a7c-482d-93f5-fe89661bb388",
+		"name": "Powerzone Tenant Setup",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24245861"
+	},
+	"item": [
+		{
+			"name": "0. Token",
+			"item": [
+				{
+					"name": "Generate Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.environment.set(\"service_access_token\", data.access_token)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "scope",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{emporix_client_id}}",
+									"type": "text"
+								},
+								{
+									"key": "client_secret",
+									"value": "{{emporix_client_secret}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/oauth/token",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "1. Languages",
+			"item": [
+				{
+					"name": "Add AR, FR & DE Languages",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\": \"project_lang\",\n    \"value\": \"[{\\\"id\\\":\\\"en\\\",\\\"label\\\":\\\"English (United States)\\\",\\\"default\\\":true,\\\"required\\\":false},{\\\"id\\\":\\\"fr\\\",\\\"label\\\":\\\"French\\\",\\\"default\\\":false,\\\"required\\\":false},{\\\"id\\\":\\\"de\\\",\\\"label\\\":\\\"German\\\",\\\"default\\\":false,\\\"required\\\":false},{\\\"id\\\":\\\"ar\\\",\\\"label\\\":\\\"Arabic (Saudi Arabia)\\\",\\\"default\\\":false,\\\"required\\\":false}]\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/configuration/{{tenant}}/configurations/project_lang",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"configuration",
+								"{{tenant}}",
+								"configurations",
+								"project_lang"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Countries",
+			"item": [
+				{
+					"name": "Disable AT & CH",
+					"item": [
+						{
+							"name": "Get Austria Version",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"country_version\", data[0].metadata.version)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries?pageSize=10&pageNumber=1&sort=code:asc&code=AT",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "code:asc"
+										},
+										{
+											"key": "code",
+											"value": "AT"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Disable Austria",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"active\": false,\n  \"metadata\": {\n    \"version\": {{country_version}} \n  }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries/AT",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries",
+										"AT"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Switzerland Version",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"country_version\", data[0].metadata.version)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries?pageSize=10&pageNumber=1&sort=code:asc&code=CH",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "code:asc"
+										},
+										{
+											"key": "code",
+											"value": "CH"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Disable Switzerland",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"active\": false,\n  \"metadata\": {\n    \"version\": {{country_version}} \n  }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries/CH",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries",
+										"CH"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Enable US, DE, FR & SA",
+					"item": [
+						{
+							"name": "Get United States Version",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"country_version\", data[0].metadata.version)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries?pageSize=10&pageNumber=1&sort=code:asc&code=US",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "code:asc"
+										},
+										{
+											"key": "code",
+											"value": "US"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Enable United States",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"active\": true,\n  \"metadata\": {\n    \"version\": {{country_version}} \n  }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries/US",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries",
+										"US"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get German Version",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"country_version\", data[0].metadata.version)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries?pageSize=10&pageNumber=1&sort=code:asc&code=DE",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "code:asc"
+										},
+										{
+											"key": "code",
+											"value": "DE"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Enable Germany",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"active\": true,\n  \"metadata\": {\n    \"version\": {{country_version}} \n  }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries/DE",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries",
+										"DE"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get France Version",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"country_version\", data[0].metadata.version)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries?pageSize=10&pageNumber=1&sort=code:asc&code=FR",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "code:asc"
+										},
+										{
+											"key": "code",
+											"value": "FR"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Enable France",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"active\": true,\n  \"metadata\": {\n    \"version\": {{country_version}} \n  }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries/FR",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries",
+										"FR"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Saudi Arabia Version",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"country_version\", data[0].metadata.version)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries?pageSize=10&pageNumber=1&sort=code:asc&code=SA",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "code:asc"
+										},
+										{
+											"key": "code",
+											"value": "SA"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Enable Saudi Arabia",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"active\": true,\n  \"metadata\": {\n    \"version\": {{country_version}} \n  }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries/SA",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries",
+										"SA"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "3. Currencies",
+			"item": [
+				{
+					"name": "Add USD Currency",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"USD\",\n    \"name\": {\n        \"en\": \"United States Dollar\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/currencies",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"currencies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add GBP Currency",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"GBP\",\n    \"name\": {\n        \"en\": \"British Pound Sterling\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/currencies",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"currencies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add SAR Currency",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"SAR\",\n    \"name\": {\n        \"en\": \"Saudi Riyal\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/currencies",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"currencies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get EUR_GBP Exchange Rates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/exchanges/EUR_GBP",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"exchanges",
+								"EUR_GBP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create EUR_GBP Exchange Rate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sourceCurrency\": \"EUR\",\n    \"targetCurrency\": \"GBP\",\n    \"rate\": 0.89,\n    \"metadata\": {\n        \"version\": 1\n    }\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/exchanges/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"exchanges",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get EUR_USD Exchange Rates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/exchanges/EUR_USD",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"exchanges",
+								"EUR_USD"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create EUR_USD Exchange Rate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sourceCurrency\": \"EUR\",\n    \"targetCurrency\": \"USD\",\n    \"rate\": 1.09,\n    \"metadata\": {\n        \"version\": {{currency_exchange_rates}}\n    }\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/exchanges/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"exchanges",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get EUR_SAR Exchange Rates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/exchanges/EUR_SAR",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"exchanges",
+								"EUR_SAR"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create EUR-SAR Exchange Rate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sourceCurrency\": \"EUR\",\n    \"targetCurrency\": \"SAR\",\n    \"rate\": 4.1,\n    \"metadata\": {\n        \"version\": {{currency_exchange_rates}}\n    }\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/currency/{{tenant}}/exchanges/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"currency",
+								"{{tenant}}",
+								"exchanges",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Sites",
+			"item": [
+				{
+					"name": "Get Main Site Version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.environment.set(\"site_version\", data.metadata.version)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/site/{{tenant}}/sites/main",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site",
+								"{{tenant}}",
+								"sites",
+								"main"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Main Site: United States",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"main\",\n    \"name\": \"United States\",\n    \"active\": true,\n    \"defaultLanguage\": \"en\",\n    \"languages\": [\n        \"en\",\n        \"fr\",\n        \"de\",\n        \"ar\"\n    ],\n    \"currency\": \"USD\",\n    \"availableCurrencies\": [\n        \"EUR\",\n        \"GBP\",\n        \"USD\",\n        \"SAR\"\n    ],\n    \"homeBase\": {\n        \"address\": {\n            \"street\": \"Broadway\",\n            \"streetNumber\": \"1500\",\n            \"zipCode\": \"10036\",\n            \"city\": \"New York\",\n            \"country\": \"US\",\n            \"state\": \"NY\"\n        },\n        \"location\": {\n            \"latitude\": 40.7568658044745,\n            \"longitude\": -73.9858713458565\n        }\n    },\n    \"shipToCountries\": [\n        \"US\"\n    ],\n    \"metadata\": {\n        \"version\": {{site_version}}\n    },\n    \"default\": true\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/site/{{tenant}}/sites/main",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site",
+								"{{tenant}}",
+								"sites",
+								"main"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Site France",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"FR\",\n    \"name\": \"France\",\n    \"active\": true,\n    \"defaultLanguage\": \"fr\",\n    \"languages\": [\n        \"en\",\n        \"fr\",\n        \"de\",\n        \"ar\"\n    ],\n    \"currency\": \"EUR\",\n    \"availableCurrencies\": [\n        \"EUR\",\n        \"GBP\",\n        \"USD\",\n        \"SAR\"\n    ],\n    \"homeBase\": {\n        \"address\": {\n            \"street\": \"Bd des Capucines\",\n            \"streetNumber\": \"3\",\n            \"zipCode\": \"75002\",\n            \"city\": \"Paris\",\n            \"country\": \"FR\",\n            \"state\": \"\"\n        },\n        \"location\": {\n            \"latitude\": 48.8710269384582,\n            \"longitude\": 2.333822902038\n        }\n    },\n    \"shipToCountries\": [\n        \"FR\"\n    ],\n    \"shipping\": [\n        {\n            \"id\": \"default\",\n            \"serviceType\": \"urn:x-yaas:service:shipping\",\n            \"serviceUrl\": \"https://saas-ag-prod.apigee.net/caas-shipping\",\n            \"active\": true\n        }\n    ],\n    \"payment\": [\n        {\n            \"id\": \"stripe\",\n            \"name\": \"Stripe Payment Service\",\n            \"serviceType\": \"urn:x-yaas:service:payment\",\n            \"serviceUrl\": \"http://iban-validator\",\n            \"active\": true\n        }\n    ],\n    \"tax\": [],\n    \"metadata\": {\n        \"mixins\": {\n            \"customerSettings\": \"https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/customerSettingsSiteMixIn.v3\",\n            \"orderProcessSettings\": \"https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/orderProcessSettingsSiteMixIn.v7\",\n            \"merchantInfo\": \"https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/merchantAddressMixin.v10\",\n            \"hubspotProperties\": \"https://res.cloudinary.com/saas-ag/raw/upload/v1636705567/schemata/hubSpotMixin.json\",\n            \"productSettings\": \"https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/productSettingsSiteMixIn.v1\",\n            \"feeService\": \"https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/siteFeeService.json\",\n            \"imageSize\": \"https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/imageSize.v6\"\n        },\n        \"version\": 1\n    },\n    \"default\": false\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/site/{{tenant}}/sites/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site",
+								"{{tenant}}",
+								"sites",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Site Germany",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"DE\",\n    \"name\": \"Germany\",\n    \"active\": true,\n    \"defaultLanguage\": \"de\",\n    \"languages\": [\n        \"en\",\n        \"fr\",\n        \"de\",\n        \"ar\"\n    ],\n    \"currency\": \"EUR\",\n    \"availableCurrencies\": [\n        \"EUR\",\n        \"GBP\",\n        \"USD\",\n        \"SAR\"\n    ],\n    \"homeBase\": {\n        \"address\": {\n            \"street\": \"Europaplatz 1\",\n            \"streetNumber\": \"1\",\n            \"zipCode\": \"10557\",\n            \"city\": \"Berlin\",\n            \"country\": \"DE\",\n            \"state\": \"\"\n        },\n        \"location\": {\n            \"latitude\": 52.5252674766642,\n            \"longitude\": 13.3705054741905\n        }\n    },\n    \"shipToCountries\": [\n        \"DE\",\n        \"SA\"\n    ],\n    \"shipping\": [\n        {\n            \"id\": \"default\",\n            \"serviceType\": \"urn:x-yaas:service:shipping\",\n            \"serviceUrl\": \"\",\n            \"active\": true\n        }\n    ],\n    \"payment\": [\n        {\n            \"id\": \"stripe\",\n            \"name\": \"Stripe Payment Service\",\n            \"serviceType\": \"urn:x-yaas:service:payment\",\n            \"serviceUrl\": \"http://iban-validator\",\n            \"active\": true\n        }\n    ],\n    \"tax\": [],\n    \"metadata\": {\n        \"mixins\": {},\n        \"version\": 1\n    },\n    \"default\": false\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/site/{{tenant}}/sites/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site",
+								"{{tenant}}",
+								"sites",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Site United Kingdom",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"UK\",\n    \"name\": \"United Kingdom\",\n    \"active\": true,\n    \"defaultLanguage\": \"en\",\n    \"languages\": [\n        \"en\",\n        \"fr\",\n        \"de\",\n        \"ar\"\n    ],\n    \"currency\": \"GBP\",\n    \"availableCurrencies\": [\n        \"EUR\",\n        \"GBP\",\n        \"USD\",\n        \"SAR\"\n    ],\n    \"homeBase\": {\n        \"address\": {\n            \"street\": \" Russell St\",\n            \"streetNumber\": \"10\",\n            \"zipCode\": \"WC2B 5HZ\",\n            \"city\": \"London\",\n            \"country\": \"GB\",\n            \"state\": \"\"\n        },\n        \"location\": {\n            \"latitude\": 51.5130275508837,\n            \"longitude\": -0.121182021489936\n        }\n    },\n    \"shipToCountries\": [\n        \"GB\",\n        \"SA\"\n    ],\n    \"shipping\": [\n        {\n            \"id\": \"default\",\n            \"serviceType\": \"urn:x-yaas:service:shipping\",\n            \"serviceUrl\": \"\",\n            \"active\": true\n        }\n    ],\n    \"payment\": [\n        {\n            \"id\": \"stripe\",\n            \"name\": \"Stripe Payment Service\",\n            \"serviceType\": \"urn:x-yaas:service:payment\",\n            \"serviceUrl\": \"http://iban-validator\",\n            \"active\": true\n        }\n    ],\n    \"tax\": [],\n    \"metadata\": {\n        \"mixins\": {},\n        \"version\": 1\n    },\n    \"default\": false\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/site/{{tenant}}/sites/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site",
+								"{{tenant}}",
+								"sites",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. Taxes",
+			"item": [
+				{
+					"name": "Delete AT Tax Class",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/AT",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								"AT"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete CH Tax Class",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/CH",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								"CH"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete DE Tax Class",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/DE",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								"DE"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete GB Tax Class",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/GB",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								"GB"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create US Tax Class",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"locationCode\": \"US\",\n    \"location\": {\n        \"countryCode\": \"US\"\n    },\n    \"taxClasses\": [\n        {\n            \"code\": \"STANDARD\",\n            \"name\": {\n                \"en\": \"To be calculate at checkout\"\n            },\n            \"rate\": 0\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create GB Tax Class",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"locationCode\": \"GB\",\n    \"location\": {\n        \"countryCode\": \"GB\"\n    },\n    \"taxClasses\": [\n        {\n            \"code\": \"STANDARD\",\n            \"name\": {\n                \"en\": \"Standard\"\n            },\n            \"order\": 0,\n            \"rate\": 20,\n            \"isDefault\": true\n        },\n        {\n            \"code\": \"REDUCED\",\n            \"name\": {\n                \"en\": \"Reduced\"\n            },\n            \"order\": 1,\n            \"rate\": 5\n        },\n        {\n            \"code\": \"ZERO\",\n            \"name\": {\n                \"en\": \"Zero\"\n            },\n            \"order\": 2,\n            \"rate\": 0\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create FR Tax Class",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"locationCode\": \"FR\",\n    \"location\": {\n        \"countryCode\": \"FR\"\n    },\n    \"taxClasses\": [\n        {\n            \"code\": \"STANDARD\",\n            \"name\": {\n                \"en\": \"Standard\"\n            },\n            \"rate\": 10\n        },\n        {\n            \"code\": \"REDUCED_10\",\n            \"name\": {\n                \"en\": \"Medicines and transports\"\n            },\n            \"rate\": 10\n        },\n        {\n            \"code\": \"REDUCED_5.5\",\n            \"name\": {\n                \"en\": \"Food, books & energy\"\n            },\n            \"rate\": 5.5\n        },\n        {\n            \"code\": \"REDUCED_2.1\",\n            \"name\": {\n                \"en\": \"Drugs\"\n            },\n            \"rate\": 2.1\n        },\n        {\n            \"code\": \"ZERO\",\n            \"name\": {\n                \"en\": \"Zero\"\n            },\n            \"rate\": 0\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create DE Tax Class",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"locationCode\": \"DE\",\n    \"location\": {\n        \"countryCode\": \"DE\"\n    },\n    \"taxClasses\": [\n        {\n            \"code\": \"STANDARD\",\n            \"name\": {\n                \"en\": \"Standard\"\n            },\n            \"description\": {\n                \"en\": \"Standard\"\n            },\n            \"rate\": 19\n        },\n        {\n            \"code\": \"REDUCED_7\",\n            \"name\": {\n                \"en\": \"Food and books\"\n            },\n            \"description\": {\n                \"en\": \"Food and books\"\n            },\n            \"rate\": 7\n        },\n        {\n            \"code\": \"ZERO\",\n            \"name\": {\n                \"en\": \"Zero\"\n            },\n            \"description\": {\n                \"en\": \"Zero\"\n            },\n            \"rate\": 0\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6. Prices",
+			"item": [
+				{
+					"name": "Create Tiered Prices Model",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"measurementUnit\": {\n        \"unitCode\": \"pc\",\n        \"quantity\": 1\n    },\n    \"tierDefinition\": {\n        \"tierType\": \"TIERED\",\n        \"tiers\": [\n            {\n                \"minQuantity\": {\n                    \"quantity\": 0,\n                    \"unitCode\": \"pc\"\n                }\n            },\n            {\n                \"minQuantity\": {\n                    \"quantity\": 10,\n                    \"unitCode\": \"pc\"\n                }\n            },\n            {\n                \"minQuantity\": {\n                    \"quantity\": 20,\n                    \"unitCode\": \"pc\"\n                }\n            },\n            {\n                \"minQuantity\": {\n                    \"quantity\": 50,\n                    \"unitCode\": \"pc\"\n                }\n            },\n            {\n                \"minQuantity\": {\n                    \"quantity\": 100,\n                    \"unitCode\": \"pc\"\n                }\n            }\n\n        ]\n    },\n    \"includesTax\": false,\n    \"default\": true,\n    \"name\": {\n        \"en\": \"Tiered Discount\"\n    },\n    \"description\": {\n        \"en\": \"Tiered Discount\"\n    },\n    \"includesMarkup\": false\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/price/{{tenant}}/priceModels",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"price",
+								"{{tenant}}",
+								"priceModels"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "7. Catalog",
+			"item": [
+				{
+					"name": "Create Main Catalog",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": {\n        \"en\": \"Power Zone\"\n    },\n    \"description\": {\n        \"en\": \"Power Zone\"\n    },\n    \"visibility\": {\n        \"visible\": true\n    },\n    \"publishedSites\": [\n        \"main\",\n        \"FR\",\n        \"DE\",\n        \"UK\"\n    ],\n    \"categoryIds\": []\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/catalog/{{tenant}}/catalogs",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"catalog",
+								"{{tenant}}",
+								"catalogs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "8. User",
+			"item": [
+				{
+					"name": "Request Anonymous Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.environment.set(\"anonymous_access_token\", data.access_token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/customerlogin/auth/anonymous/login?tenant={{tenant}}&client_id={{emporix_storefront_client_id}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"customerlogin",
+								"auth",
+								"anonymous",
+								"login"
+							],
+							"query": [
+								{
+									"key": "tenant",
+									"value": "{{tenant}}"
+								},
+								{
+									"key": "client_id",
+									"value": "{{emporix_storefront_client_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Test User Doc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{anonymous_access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"nicolas@emporix.com\",\n  \"password\": \"Emporix__11\",\n  \"customerDetails\": {\n    \"title\": \"MR\",\n    \"firstName\": \"Nicolas\",\n    \"middleName\": \"\",\n    \"lastName\": \"Berney\",\n    \"contactEmail\": \"nicolas@emporix.com\",\n    \"contactPhone\": \"+41 41 781 05 17\",\n    \"company\": \"Emporix\",\n    \"preferredLanguage\": \"en\",\n    \"preferredCurrency\": \"EUR\",\n    \"preferredSite\": \"main\"\n  },\n  \"customerAddress\": {\n    \"contactName\": \"Nicolas Berney\",\n    \"companyName\": \"Emporix\",\n    \"street\": \"Platz der Republik\",\n    \"streetNumber\": \"1\",\n    \"streetAppendix\": \"\",\n    \"extraLine1\": \"\",\n    \"extraLine2\": \"\",\n    \"extraLine3\": \"\",\n    \"extraLine4\": \"\",\n    \"zipCode\": \"11011\",\n    \"city\": \"Berlin\",\n    \"country\": \"DE\",\n    \"state\": \"Berlin\",\n    \"contactPhone\": \"123456789\",\n    \"tags\": [\n      \"BILLING\",\n      \"SHIPPING\"\n    ]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/customer/{{tenant}}/signup",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"customer",
+								"{{tenant}}",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "9. Coupon",
+			"item": [
+				{
+					"name": "Create Coupon 10%OFF",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"discountType\": \"PERCENT\",\n    \"categoryRestricted\": false,\n    \"name\": \"10% OFF\",\n    \"code\": \"10OFF\",\n    \"description\": \"10% OFF\",\n    \"discountPercentage\": \"10\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/coupon-v2/{{tenant}}/coupons",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"coupon-v2",
+								"{{tenant}}",
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{service_access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

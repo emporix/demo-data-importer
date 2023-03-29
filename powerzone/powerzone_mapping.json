@@ -1,0 +1,377 @@
+{
+  "products": {
+    "identifier" : {
+      "csvKey": "Sku ID"
+    },
+    "parentIdentifier" : {
+      "csvKey": "Parent ID"
+    },
+    "productType" : {
+      "csvKey" : "Product type"
+    },
+    "attributes": [
+      {
+        "csvKey": "Sku ID",
+        "emporixKey": "id"
+      },
+      {
+        "csvKey": "EAN",
+        "emporixKey": "code"
+      },
+      {
+        "csvKey" : "Name product EN",
+        "emporixKey" : "name.en"
+      },
+      {
+        "csvKey" : "Name product EN",
+        "emporixKey" : "name.en-gb"
+      },
+      {
+        "csvKey" : "Name product DE",
+        "emporixKey" : "name.de"
+      },
+      {
+        "csvKey" : "Name product FR",
+        "emporixKey" : "name.fr"
+      },
+      {
+        "csvKey" : "Name product AR",
+        "emporixKey" : "name.ar"
+      },
+      {
+        "csvKey" : "Description product EN",
+        "emporixKey" : "description.en"
+      },
+      {
+        "csvKey" : "Description product DE",
+        "emporixKey" : "description.de"
+      },
+      {
+        "csvKey" : "Description product FR",
+        "emporixKey" : "description.fr"
+      },
+      {
+        "csvKey" : "Description product AR",
+        "emporixKey" : "description.ar"
+      },
+      {
+        "csvKey" : "Product type",
+        "emporixKey" : "productType"
+      },
+      {
+        "csvKey": "Product template",
+        "emporixKey": "template",
+        "type" : "REFERENCE",
+        "createIfMissing" : true,
+        "referenceType" : "PRODUCT_TEMPLATE"
+      },
+      {
+        "csvKey": "Parent ID",
+        "emporixKey": "parentVariantId"
+      },
+      {
+        "csvKey": "Tax GB",
+        "emporixKey": "taxClasses.GB"
+      },
+      {
+        "csvKey": "Tax US",
+        "emporixKey": "taxClasses.US"
+      },
+      {
+        "csvKey": "Tax FR",
+        "emporixKey": "taxClasses.FR"
+      },
+      {
+        "csvKey": "Tax DE",
+        "emporixKey": "taxClasses.DE"
+      },
+      {
+        "csvKey": "Pricing Measure value",
+        "emporixKey" : "mixins.productCustomAttributes.pricingMeasure.value",
+        "type" : "NUMBER"
+      },
+      {
+        "csvKey": "Pricing Measure Unit Code",
+        "emporixKey" : "mixins.productCustomAttributes.pricingMeasure.unitCode"
+      },
+      {
+        "csvKey": "In Stock",
+        "emporixKey" : "mixins.productCustomAttributes.inStock",
+        "type" : "BOOLEAN"
+      },
+      {
+        "csvKey": "Brand",
+        "type" : "REFERENCE",
+        "referenceType" : "BRAND",
+        "createIfMissing" : true,
+        "emporixKey": "mixins.productCustomAttributes.brand"
+      },
+      {
+        "csvKey" : "Bundled products",
+        "emporixKey" : "bundledProducts",
+        "bundle" : true
+      },
+      {
+        "csvKey" : "T-shirt size",
+        "variantAttribute" : true,
+        "emporixKey" : "size"
+      },
+      {
+        "csvKey" : "Shoes size",
+        "variantAttribute" : true,
+        "emporixKey" : "size",
+        "type" : "NUMBER"
+      },
+      {
+        "csvKey" : "Dimension",
+        "variantAttribute" : true,
+        "emporixKey" : "dimension"
+      },
+      {
+        "csvKey" : "Wrench dimension",
+        "variantAttribute" : true,
+        "emporixKey" : "dimension",
+        "type" : "NUMBER"
+      },
+      {
+        "csvKey" : "Head screw size",
+        "variantAttribute" : true,
+        "emporixKey" : "head-screw-size",
+        "valueSeparator" : ";"
+      },
+      {
+        "csvKey" : "Inhex",
+        "variantAttribute" : true,
+        "emporixKey" : "inhex"
+      },
+      {
+        "csvKey" : "External hex",
+        "variantAttribute" : true,
+        "emporixKey" : "external-hex"
+      },
+      {
+        "csvKey" : "Pipe cutter dimensions",
+        "variantAttribute" : true,
+        "emporixKey" : "dimension",
+        "type" : "NUMBER"
+      },
+      {
+        "csvKey" : "Number of cutting wheels",
+        "variantAttribute" : true,
+        "emporixKey" : "number-of-cutting-wheels",
+        "type" : "NUMBER"
+      },      
+      {
+        "csvKey" : "PowerZone mixins",
+        "emporixKey" : "metadata.mixins.powerzoneAttributes"
+      },
+      {
+        "csvKey" : "EAN",
+        "emporixKey" : "mixins.powerzoneAttributes.EAN"
+      },
+      {
+        "csvKey" : "Depth mm",
+        "emporixKey" : "mixins.powerzoneAttributes.depth_mm",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "Width mm",
+        "emporixKey" : "mixins.powerzoneAttributes.width_mm",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "Height mm",
+        "emporixKey" : "mixins.powerzoneAttributes.height_mm",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "Weight Kg PS",
+        "emporixKey" : "mixins.powerzoneAttributes.weight_kg_ps",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "Weight Kg product",
+        "emporixKey" : "mixins.powerzoneAttributes.weight_kg_product",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "PDF data sheet",
+        "emporixKey" : "mixins.powerzoneAttributes.pdf_data_sheet"
+      },
+      {
+        "csvKey" : "Link video YouTube",
+        "emporixKey" : "mixins.powerzoneAttributes.link_video_youtube"
+      },
+      {
+        "csvKey" : "Customs codes",
+        "emporixKey" : "mixins.powerzoneAttributes.custom_code"
+      },
+      {
+        "csvKey" : "Country of origin",
+        "emporixKey" : "mixins.powerzoneAttributes.country_of_origins"
+      },
+      {
+        "csvKey" : "Lithium battery",
+        "emporixKey" : "mixins.powerzoneAttributes.lithium_battery",
+        "type" : "BOOLEAN"
+      },
+      {
+        "csvKey" : "Minimum purchase to the supplier",
+        "emporixKey" : "mixins.powerzoneAttributes.minimum_purchase_to_customer",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "Pieces per pack",
+        "emporixKey" : "mixins.powerzoneAttributes.pieces_per_pack",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "Number of packs",
+        "emporixKey" : "mixins.powerzoneAttributes.number_of_packs",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "Total pieces",
+        "emporixKey" : "mixins.powerzoneAttributes.total_pieces",
+        "type" : "DECIMAL"
+      },
+      {
+        "csvKey" : "Blades",
+        "emporixKey" : "mixins.powerzoneAttributes.blades",
+        "type" : "BOOLEAN"
+      }
+    ]
+  },
+  "images" : {
+    "directoryPath" : "powerzone/images",
+    "columns" : ["Image 1", "Image 2", "Image 3"]
+  },
+  "categories" : {
+    "catalog" : "64118041cbbfa810db659b8c",
+    "categoryTree" : {
+      "csvKey" : "Name category EN",
+      "separator" : " > "
+    },
+    "productAssignment" : {
+      "csvKey" : "SKU"
+    }
+  },
+  "prices" : {
+    "productIdentifier" : {
+      "csvKey" : "SKU"
+    },
+    "sites" : [
+      {
+        "siteCode" : "FR",
+        "currency" : "EUR",
+        "location" : "FR",
+        "tiers" : [
+          {
+            "csvKey" : "FR Price Tier 1 - 0 pc"
+          },
+          {
+            "csvKey" : "FR Price Tier 2 - 10 pc"
+          },
+          {
+            "csvKey" : "FR Price Tier 3 - 20 pc"
+          },
+          {
+            "csvKey" : "FR Price Tier 4 - 50 pc"
+          },
+          {
+            "csvKey" : "FR Price Tier 5 - 100 pc"
+          }
+        ]
+      },
+      {
+        "siteCode" : "UK",
+        "currency" : "EUR",
+        "location" : "GB",
+        "tiers" : [
+          {
+            "csvKey" : "UK Price Tier 1 - 0 pc"
+          },
+          {
+            "csvKey" : "UK Price Tier 2 - 10 pc"
+          },
+          {
+            "csvKey" : "UK Price Tier 3 - 20 pc"
+          },
+          {
+            "csvKey" : "UK Price Tier 4 - 50 pc"
+          },
+          {
+            "csvKey" : "UK Price Tier 5 - 100 pc"
+          }
+        ]
+      },
+      {
+        "siteCode" : "main",
+        "currency" : "EUR",
+        "location" : "US",
+        "tiers" : [
+          {
+            "csvKey" : "US Price Tier 1 - 0 pc"
+          },
+          {
+            "csvKey" : "US Price Tier 2 - 10 pc"
+          },
+          {
+            "csvKey" : "US Price Tier 3 - 20 pc"
+          },
+          {
+            "csvKey" : "US Price Tier 4 - 50 pc"
+          },
+          {
+            "csvKey" : "US Price Tier 5 - 100 pc"
+          }
+        ]
+      },
+      {
+        "siteCode" : "DE",
+        "currency" : "EUR",
+        "location" : "DE",
+        "tiers" : [
+          {
+            "csvKey" : "DE Price Tier 1 - 0 pc"
+          },
+          {
+            "csvKey" : "DE Price Tier 2 - 10 pc"
+          },
+          {
+            "csvKey" : "DE Price Tier 3 - 20 pc"
+          },
+          {
+            "csvKey" : "DE Price Tier 4 - 50 pc"
+          },
+          {
+            "csvKey" : "DE Price Tier 5 - 100 pc"
+          }
+        ]
+      }
+    ]
+  },
+  "availabilities" : {
+    "productIdentifier" : {
+      "csvKey" : "Sku ID"
+    },
+    "sites" : [
+      {
+        "siteCode" : "main",
+        "csvKey" : "Stock US"
+      },
+      {
+        "siteCode" : "UK",
+        "csvKey" : "Stock UK"
+      },
+      {
+        "siteCode" : "FR",
+        "csvKey" : "Stock FR"
+      },
+      {
+        "siteCode" : "DE",
+        "csvKey" : "Stock DE"
+      }
+    ]
+  }
+}

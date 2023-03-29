@@ -1,0 +1,61 @@
+{
+  "products": {
+    "identifier" : {
+      "csvKey": ""
+    },
+    "parentIdentifier" : {
+      "csvKey": ""
+    },
+    "productType" : {
+      "csvKey" : ""
+    },
+    "attributes": [
+      {
+        "csvKey": "",
+        "emporixKey": "id"
+      }
+    ]
+  },
+  "images" : {
+    "directoryPath" : "",
+    "columns" : []
+  },
+  "categories" : {
+    "categoryTree" : {
+      "csvKey" : "",
+      "separator" : ""
+    },
+    "productAssignment" : {
+      "csvKey" : ""
+    }
+  },
+  "prices" : {
+    "productIdentifier" : {
+      "csvKey" : ""
+    },
+    "sites" : [
+      {
+        "siteCode": "",
+        "currency": "",
+        "location": "",
+        "tiers": [
+          {
+            "csvKey": ""
+          }
+        ]
+      }
+    ]
+  }
+  ,
+  "availabilities" : {
+    "productIdentifier" : {
+      "csvKey" : ""
+    },
+    "sites" : [
+      {
+        "siteCode" : "",
+        "csvKey" : ""
+      }
+    ]
+  }
+}
