@@ -53,7 +53,6 @@ def brand_reference(apiUrl, tenant, accessToken, attributeConfig, brandName):
 def product_template_reference(apiUrl, tenant, accessToken, attributeConfig, mapping, templateName, item):
   r = http.get(f'{apiUrl}/product/{tenant}/product-templates?q=name:"{templateName}"',
         headers = {'Authorization' : f'Bearer {accessToken}'})
-  print(r)
   response = r.json()
   if response:
     templateResponse = {
