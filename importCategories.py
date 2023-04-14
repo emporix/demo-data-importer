@@ -60,12 +60,12 @@ def assign_root_category_to_catalog(apiUrl, tenant, accessToken, mapping, catego
       catalogId = mapping['categories']['catalog']
       r = http.get(f'{apiUrl}/catalog/{tenant}/catalogs/{catalogId}', headers = {'Authorization' : f'Bearer {accessToken}'})
       currentCatalog = r.json()
-      print(currentCatalog)
+      print(json.dumps(currentCatalog))
       if 'categoryIds' not in currentCatalog:
         currentCatalog['categoryIds'] = []
       currentCatalog['categoryIds'].append(categoryId)
       print("updating")
-      print(currentCatalog)
+      print(json.dumps(currentCatalog))
       r2 = http.put(f'{apiUrl}/catalog/{tenant}/catalogs/{catalogId}',
        json = currentCatalog,
        headers = {'Authorization' : f'Bearer {accessToken}'})

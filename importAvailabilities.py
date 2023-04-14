@@ -70,7 +70,7 @@ def prepare_payload(item, mapping, site, productId):
           "productId" : productId,
           "distributionChannel" : "ASSORTMENT"
          }
-  print(payload)
+  print(json.dumps(payload))
   return payload
 
 def persist_availability(apiUrl, tenant, accessToken, payload, productId,site):

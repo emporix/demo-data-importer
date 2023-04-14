@@ -129,7 +129,7 @@ def adjust_payload(payload):
 
 def save_product(apiUrl, tenant, token, payload):
     print("Saving product:")
-    print(payload)
+    print(json.dumps(payload))
     r = http.post(f'{apiUrl}/product/{tenant}/products',
       json = payload,
       headers = {'Authorization' : f'Bearer {token}', 'tenant' : tenant})

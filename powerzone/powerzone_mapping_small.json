@@ -86,6 +86,10 @@
         "emporixKey": "taxClasses.DE"
       },
       {
+        "csvKey": "Tax IT",
+        "emporixKey": "taxClasses.IT"
+      },
+      {
         "csvKey": "Pricing Measure value",
         "emporixKey" : "mixins.productCustomAttributes.pricingMeasure.value",
         "type" : "NUMBER"
@@ -301,6 +305,28 @@
           },
           {
             "csvKey" : "DE Price Tier 5 - 100 pc"
+          }
+        ]
+      },
+      {
+        "siteCode" : "DE",
+        "currency" : "EUR",
+        "location" : "IT",
+        "tiers" : [
+          {
+            "csvKey" : "IT Price Tier 1 - 0 pc"
+          },
+          {
+            "csvKey" : "IT Price Tier 2 - 10 pc"
+          },
+          {
+            "csvKey" : "IT Price Tier 3 - 20 pc"
+          },
+          {
+            "csvKey" : "IT Price Tier 4 - 50 pc"
+          },
+          {
+            "csvKey" : "IT Price Tier 5 - 100 pc"
           }
         ]
       }

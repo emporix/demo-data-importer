@@ -319,7 +319,7 @@
 					]
 				},
 				{
-					"name": "Enable US, DE, FR & SA",
+					"name": "Enable US, DE, FR, IT & SA",
 					"item": [
 						{
 							"name": "Get United States Version",
@@ -601,6 +601,101 @@
 										"{{tenant}}",
 										"countries",
 										"FR"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Italy Version",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"country_version\", data[0].metadata.version)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries?pageSize=10&pageNumber=1&sort=code:asc&code=IT",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries"
+									],
+									"query": [
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "pageNumber",
+											"value": "1"
+										},
+										{
+											"key": "sort",
+											"value": "code:asc"
+										},
+										{
+											"key": "code",
+											"value": "IT"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Enable Italy",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"active\": true,\n  \"metadata\": {\n    \"version\": {{country_version}} \n  }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/country/{{tenant}}/countries/IT",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"country",
+										"{{tenant}}",
+										"countries",
+										"IT"
 									]
 								}
 							},
@@ -982,7 +1077,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"sourceCurrency\": \"EUR\",\n    \"targetCurrency\": \"USD\",\n    \"rate\": 1.09,\n    \"metadata\": {\n        \"version\": {{currency_exchange_rates}}\n    }\n}"
+							"raw": "{\n    \"sourceCurrency\": \"EUR\",\n    \"targetCurrency\": \"USD\",\n    \"rate\": 1.09,\n    \"metadata\": {\n        \"version\": 1\n    }\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/currency/{{tenant}}/exchanges/",
@@ -1069,7 +1164,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"sourceCurrency\": \"EUR\",\n    \"targetCurrency\": \"SAR\",\n    \"rate\": 4.1,\n    \"metadata\": {\n        \"version\": {{currency_exchange_rates}}\n    }\n}"
+							"raw": "{\n    \"sourceCurrency\": \"EUR\",\n    \"targetCurrency\": \"SAR\",\n    \"rate\": 4.1,\n    \"metadata\": {\n        \"version\": 1\n    }\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/currency/{{tenant}}/exchanges/",
@@ -1232,7 +1327,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"code\": \"DE\",\n    \"name\": \"Germany\",\n    \"active\": true,\n    \"defaultLanguage\": \"de\",\n    \"languages\": [\n        \"en\",\n        \"fr\",\n        \"de\",\n        \"ar\"\n    ],\n    \"currency\": \"EUR\",\n    \"availableCurrencies\": [\n        \"EUR\",\n        \"GBP\",\n        \"USD\",\n        \"SAR\"\n    ],\n    \"homeBase\": {\n        \"address\": {\n            \"street\": \"Europaplatz 1\",\n            \"streetNumber\": \"1\",\n            \"zipCode\": \"10557\",\n            \"city\": \"Berlin\",\n            \"country\": \"DE\",\n            \"state\": \"\"\n        },\n        \"location\": {\n            \"latitude\": 52.5252674766642,\n            \"longitude\": 13.3705054741905\n        }\n    },\n    \"shipToCountries\": [\n        \"DE\",\n        \"SA\"\n    ],\n    \"shipping\": [\n        {\n            \"id\": \"default\",\n            \"serviceType\": \"urn:x-yaas:service:shipping\",\n            \"serviceUrl\": \"\",\n            \"active\": true\n        }\n    ],\n    \"payment\": [\n        {\n            \"id\": \"stripe\",\n            \"name\": \"Stripe Payment Service\",\n            \"serviceType\": \"urn:x-yaas:service:payment\",\n            \"serviceUrl\": \"http://iban-validator\",\n            \"active\": true\n        }\n    ],\n    \"tax\": [],\n    \"metadata\": {\n        \"mixins\": {},\n        \"version\": 1\n    },\n    \"default\": false\n}"
+							"raw": "{\n    \"code\": \"DE\",\n    \"name\": \"Germany\",\n    \"active\": true,\n    \"defaultLanguage\": \"de\",\n    \"languages\": [\n        \"en\",\n        \"fr\",\n        \"de\",\n        \"ar\"\n    ],\n    \"currency\": \"EUR\",\n    \"availableCurrencies\": [\n        \"EUR\",\n        \"GBP\",\n        \"USD\",\n        \"SAR\"\n    ],\n    \"homeBase\": {\n        \"address\": {\n            \"street\": \"Europaplatz 1\",\n            \"streetNumber\": \"1\",\n            \"zipCode\": \"10557\",\n            \"city\": \"Berlin\",\n            \"country\": \"DE\",\n            \"state\": \"\"\n        },\n        \"location\": {\n            \"latitude\": 52.5252674766642,\n            \"longitude\": 13.3705054741905\n        }\n    },\n    \"shipToCountries\": [\n        \"DE\",\n        \"IT\",\n        \"SA\"\n    ],\n    \"shipping\": [\n        {\n            \"id\": \"default\",\n            \"serviceType\": \"urn:x-yaas:service:shipping\",\n            \"serviceUrl\": \"\",\n            \"active\": true\n        }\n    ],\n    \"payment\": [\n        {\n            \"id\": \"stripe\",\n            \"name\": \"Stripe Payment Service\",\n            \"serviceType\": \"urn:x-yaas:service:payment\",\n            \"serviceUrl\": \"http://iban-validator\",\n            \"active\": true\n        }\n    ],\n    \"tax\": [],\n    \"metadata\": {\n        \"mixins\": {},\n        \"version\": 1\n    },\n    \"default\": false\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/site/{{tenant}}/sites/",
@@ -1292,7 +1387,7 @@
 			]
 		},
 		{
-			"name": "5. Taxes",
+			"name": "5. Taxes (See Documentation)",
 			"item": [
 				{
 					"name": "Delete AT Tax Class",
@@ -1637,8 +1732,54 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create IT Tax Class",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"locationCode\": \"IT\",\n    \"location\": {\n        \"countryCode\": \"IT\"\n    },\n    \"taxClasses\": [\n        {\n            \"code\": \"STANDARD\",\n            \"name\": {\n                \"en\": \"Standard\"\n            },\n            \"description\": {\n                \"en\": \"Standard\"\n            },\n            \"rate\": 22\n        },\n        {\n            \"code\": \"REDUCED_10\",\n            \"name\": {\n                \"en\": \"Pharmaceuticals, hotel accommodations\"\n            },\n            \"description\": {\n                \"en\": \"Pharmaceuticals, hotel accommodations\"\n            },\n            \"rate\": 10\n        },\n        {\n            \"code\": \"REDUCED_5\",\n            \"name\": {\n                \"en\": \"Food and books\"\n            },\n            \"description\": {\n                \"en\": \"Food and books\"\n            },\n            \"rate\": 5\n        },\n        {\n            \"code\": \"ZERO\",\n            \"name\": {\n                \"en\": \"Zero\"\n            },\n            \"description\": {\n                \"en\": \"Zero\"\n            },\n            \"rate\": 0\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/tax/{{tenant}}/taxes/",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tax",
+								"{{tenant}}",
+								"taxes",
+								""
+							]
+						}
+					},
+					"response": []
 				}
-			]
+			],
+			"description": "To generate the correct payload for each country with ChatGPT:\n\nCreate the corresponding JSON files for the following countries AT, CH, DE, PL, CZ including STANDARD, REDUCED, and ZERO Sales Rates. Add the full description of the STANDARD, REDUCED, ZERO Sales Rates. Each country is one JSON file. Use this format:  \n{  \n\"locationCode\": \"AT\",  \n\"location\": {  \n\"countryCode\": \"AT\"  \n},  \n\"taxClasses\": \\[  \n{  \n\"code\": \"STANDARD\",  \n\"name\": {  \n\"en\": \"Standard\"  \n},  \n\"order\": 0,  \n\"rate\": 20,  \n\"isDefault\": true,  \n\"description\": {  \n\"en\": \"Applies to most goods and services, including food and drink, clothing, furniture, and electronic devices.\"  \n}  \n},  \n{  \n\"code\": \"REDUCED\",  \n\"name\": {  \n\"en\": \"Reduced\"  \n},  \n\"order\": 1,  \n\"rate\": 10,  \n\"description\": {  \n\"en\": \"Applies to basic foodstuffs, certain medical products and devices, newspapers and periodicals, and certain services.\"  \n}  \n},  \n{  \n\"code\": \"ZERO\",  \n\"name\": {  \n\"en\": \"Zero\"  \n},  \n\"order\": 2,  \n\"rate\": 0,  \n\"description\": {  \n\"en\": \"Applies to certain goods and services, including most food and drink, books and newspapers, and exports outside the EU.\"  \n}  \n}  \n\\]  \n}"
 		},
 		{
 			"name": "6. Prices",
@@ -1815,13 +1956,25 @@
 					"response": []
 				},
 				{
-					"name": "Create Test User Doc",
+					"name": "Create John Test User for FIAT",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									""
+									"var data = pm.response.json()",
+									"pm.environment.set(\"user_id\", data.id)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"user_first_name\", \"John\")",
+									"pm.environment.set(\"user_first_name_lowercase\", pm.variables.get(\"user_first_name\").toLowerCase())",
+									"pm.environment.set(\"user_last_name\", \"Doe\")"
 								],
 								"type": "text/javascript"
 							}
@@ -1851,7 +2004,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"nicolas@emporix.com\",\n  \"password\": \"Emporix__11\",\n  \"customerDetails\": {\n    \"title\": \"MR\",\n    \"firstName\": \"Nicolas\",\n    \"middleName\": \"\",\n    \"lastName\": \"Berney\",\n    \"contactEmail\": \"nicolas@emporix.com\",\n    \"contactPhone\": \"+41 41 781 05 17\",\n    \"company\": \"Emporix\",\n    \"preferredLanguage\": \"en\",\n    \"preferredCurrency\": \"EUR\",\n    \"preferredSite\": \"main\"\n  },\n  \"customerAddress\": {\n    \"contactName\": \"Nicolas Berney\",\n    \"companyName\": \"Emporix\",\n    \"street\": \"Platz der Republik\",\n    \"streetNumber\": \"1\",\n    \"streetAppendix\": \"\",\n    \"extraLine1\": \"\",\n    \"extraLine2\": \"\",\n    \"extraLine3\": \"\",\n    \"extraLine4\": \"\",\n    \"zipCode\": \"11011\",\n    \"city\": \"Berlin\",\n    \"country\": \"DE\",\n    \"state\": \"Berlin\",\n    \"contactPhone\": \"123456789\",\n    \"tags\": [\n      \"BILLING\",\n      \"SHIPPING\"\n    ]\n  }\n}"
+							"raw": "{\n  \"email\": \"{{user_first_name_lowercase}}@fiat.com\",\n  \"password\": \"Emporix__11\",\n  \"customerDetails\": {\n    \"title\": \"MR\",\n    \"firstName\": \"{{user_first_name}}\",\n    \"middleName\": \"\",\n    \"lastName\": \"{{user_last_name}}\",\n    \"contactEmail\": \"{{user_first_name_lowercase}}@fiat.com\",\n    \"contactPhone\": \"00 800 342 800 00\",\n    \"company\": \"FIAT\",\n    \"preferredLanguage\": \"en\",\n    \"preferredCurrency\": \"EUR\",\n    \"preferredSite\": \"DE\"\n  },\n  \"customerAddress\": {\n    \"contactName\": \"{{user_first_name}} {{user_last_name}}\",\n    \"companyName\": \"FIAT\",\n    \"street\": \"Corso Giovanni Agnelli\",\n    \"streetNumber\": \"200\",\n    \"streetAppendix\": \"\",\n    \"extraLine1\": \"\",\n    \"extraLine2\": \"\",\n    \"extraLine3\": \"\",\n    \"extraLine4\": \"\",\n    \"zipCode\": \"10135\",\n    \"city\": \"Torino\",\n    \"country\": \"IT\",\n    \"state\": \"Italy\",\n    \"contactPhone\": \"00 800 342 800 00\",\n    \"tags\": [\n      \"BILLING\",\n      \"SHIPPING\"\n    ]\n  }\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/customer/{{tenant}}/signup",
@@ -1870,10 +2023,858 @@
 			]
 		},
 		{
-			"name": "9. Coupon",
+			"name": "9. Companies",
 			"item": [
 				{
-					"name": "Create Coupon 10%OFF",
+					"name": "Company",
+					"item": [
+						{
+							"name": "Create FIAT Company",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"company_id\", data.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"FIAT\",\n    \"type\": \"COMPANY\",\n    \"legalInfo\": {\n        \"legalName\": \"Fiat Automobiles S.p.A.\",\n        \"taxRegistrationNumber\": \"07973780013\",\n        \"countryOfRegistration\": \"IT\",\n        \"registrationAgency\": \"222222\",\n        \"registrationId\": \"333333\",\n        \"registrationDate\": \"2023-01-16T23:00:00.000Z\"\n    },\n    \"accountLimit\": {\n        \"currency\": \"EUR\",\n        \"value\": 15000\n    }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/legal-entities",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"legal-entities"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Subsidiaries",
+					"item": [
+						{
+							"name": "Create Alfa Romeo Subsidiary",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"SUBSIDIARY\",\n    \"name\": \"Alfa Romeo\",\n    \"parentId\": \"{{company_id}}\",\n    \"legalInfo\": {\n        \"legalName\": \"Alfa Romeo\",\n        \"countryOfRegistration\": \"IT\",\n        \"registrationDate\": \"2023-01-16T23:00:00.000Z\",\n        \"taxRegistrationNumber\": \"1111111\",\n        \"registrationAgency\": \"222222\",\n        \"registrationId\": \"33333\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/legal-entities",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"legal-entities"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Chrysler Subsidiary",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"SUBSIDIARY\",\n    \"name\": \"Chrysler\",\n    \"parentId\": \"{{company_id}}\",\n    \"legalInfo\": {\n        \"legalName\": \"Chrysler\",\n        \"countryOfRegistration\": \"IT\",\n        \"registrationDate\": \"2023-01-16T23:00:00.000Z\",\n        \"taxRegistrationNumber\": \"1111111\",\n        \"registrationAgency\": \"222222\",\n        \"registrationId\": \"33333\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/legal-entities",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"legal-entities"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Jeep Subsidiary",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"SUBSIDIARY\",\n    \"name\": \"Jeep\",\n    \"parentId\": \"{{company_id}}\",\n    \"legalInfo\": {\n        \"legalName\": \"Jeep\",\n        \"countryOfRegistration\": \"IT\",\n        \"registrationDate\": \"2023-01-16T23:00:00.000Z\",\n        \"taxRegistrationNumber\": \"1111111\",\n        \"registrationAgency\": \"222222\",\n        \"registrationId\": \"33333\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/legal-entities",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"legal-entities"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Lancia  Subsidiary",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"SUBSIDIARY\",\n    \"name\": \"Lancia\",\n    \"parentId\": \"{{company_id}}\",\n    \"legalInfo\": {\n        \"legalName\": \"Lancia\",\n        \"countryOfRegistration\": \"IT\",\n        \"registrationDate\": \"2023-01-16T23:00:00.000Z\",\n        \"taxRegistrationNumber\": \"1111111\",\n        \"registrationAgency\": \"222222\",\n        \"registrationId\": \"33333\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/legal-entities",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"legal-entities"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Company Locations",
+					"item": [
+						{
+							"name": "Create FIAT Headquarter Location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"location_headquarter_id\", data.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"HEADQUARTER\",\n    \"contactDetails\": {\n        \"countryCode\": \"IT\",\n        \"addressLine1\": \"Corso Giovanni Agnelli, 200\",\n        \"city\": \"Torino\",\n        \"postcode\": \"10135\"\n    },\n    \"name\": \"FCA Italy S.p.A\"\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/locations/",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"locations",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create FIAT Office Location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"location_office_id\", data.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"OFFICE\",\n    \"contactDetails\": {\n        \"countryCode\": \"IT\",\n        \"addressLine1\": \"258-262 Via Nizza\",\n        \"city\": \"Torino\",\n        \"postcode\": \"10126\"\n    },\n    \"name\": \"Fiat Lingotto Factory\"\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/locations/",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"locations",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create FIAT Warehouse Location",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"location_Warehouse_id\", data.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"WAREHOUSE\",\n    \"contactDetails\": {\n        \"countryCode\": \"IT\",\n        \"addressLine1\": \"258-262 Via Nizza\",\n        \"city\": \"Torino\",\n        \"postcode\": \"10126\"\n    },\n    \"name\": \"Fiat Lingotto Factory\"\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/locations/",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"locations",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get FIAT Company Full Response",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Save the entire response body as an environment variable",
+											"pm.environment.set(\"company_full_response\", pm.response.text());"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/legal-entities/{{company_id}}",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"legal-entities",
+										"{{company_id}}"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "pageSize",
+											"value": "60",
+											"disabled": true
+										},
+										{
+											"key": "q",
+											"value": "id:(63c70421420ea77873530012)",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Assign FIAT Company 3 Locations",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Workaround because the legal-entities endpoint doesn't have a method PATCH yet",
+											"",
+											"// Get the saved response from environment variables",
+											"const savedResponse = pm.environment.get(\"company_full_response\");",
+											"",
+											"// Parse the saved response into a JavaScript object",
+											"const savedResponseObj = JSON.parse(savedResponse);",
+											"",
+											"// Add the new JSON object to the existing object",
+											"savedResponseObj.entitiesAddresses = [",
+											"    {",
+											"        \"id\": pm.variables.get(\"location_headquarter_id\")",
+											"    },",
+											"    {",
+											"        \"id\": pm.variables.get(\"location_office_id\")",
+											"    },",
+											"    {",
+											"        \"id\": pm.variables.get(\"location_Warehouse_id\")",
+											"    }",
+											"];",
+											"",
+											"// Convert the updated JavaScript object back to a JSON string",
+											"const updatedRequestBody = JSON.stringify(savedResponseObj);",
+											"",
+											"// Set the updated request body as a variable for use in the request body",
+											"pm.variables.set(\"company_request_body\", updatedRequestBody);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{company_request_body}}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/legal-entities/{{company_id}}",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"legal-entities",
+										"{{company_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Contacts",
+					"item": [
+						{
+							"name": "Create FIAT Mark Contact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"contact_id\", data.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Mark\",\n    \"surname\": \"Stewart\",\n    \"contactDetails\": {\n        \"countryCode\": \"IT\",\n        \"addressLine1\": \"Corso Giovanni Agnelli, 200\",\n        \"city\": \"Torino\",\n        \"postcode\": \"10135\",\n        \"phones\": [\n            \"00 800 3428 00 00\"\n        ],\n        \"emails\": [\n            \"Mark.Stewart@fiat.com\"\n        ]\n    }\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/contacts",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create FIAT Mark Contact Assignment",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"legalEntity\": {\n        \"id\": \"{{company_id}}\"\n    },\n    \"contact\": {\n        \"id\": \"{{contact_id}}\"\n    },\n    \"type\": \"PRIMARY\",\n    \"primary\": true\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/contact-assignments/",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"contact-assignments",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create FIAT John Contact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"contact_id\", data.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{user_first_name}}\",\n    \"surname\": \"{{user_last_name}}\",\n    \"contactDetails\": {\n        \"countryCode\": \"IT\",\n        \"addressLine1\": \"Corso Giovanni Agnelli, 200\",\n        \"city\": \"Torino\",\n        \"postcode\": \"10135\",\n        \"phones\": [\n            \"00 800 3428 00 00\"\n        ],\n        \"emails\": [\n            \"{{user_first_name_lowercase}}@fiat.com\"\n        ]\n    }\n}\n"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/contacts",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"contacts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create FIAT John Contact Assignment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data = pm.response.json()",
+											"pm.environment.set(\"contact_assignment_id\", data.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"legalEntity\": {\n        \"id\": \"{{company_id}}\"\n    },\n    \"contact\": {\n        \"id\": \"{{contact_id}}\"\n    },\n    \"type\": \"LOGISTICS\",\n    \"primary\": false\n}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/contact-assignments/",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"contact-assignments",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Contact & Customer Link",
+					"item": [
+						{
+							"name": "Get Contact",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Save the entire response body as an environment variable",
+											"pm.environment.set(\"contact_full_response\", pm.response.text());"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/contacts/{{contact_id}}",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"contacts",
+										"{{contact_id}}"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "pageSize",
+											"value": "60",
+											"disabled": true
+										},
+										{
+											"key": "q",
+											"value": "id:(63c70421420ea77873530012)",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Link Contact to Customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// Workaround because the legal-entities endpoint doesn't have a method PATCH yet",
+											"",
+											"// Get the saved response from environment variables",
+											"const savedResponse = pm.environment.get(\"contact_full_response\");",
+											"",
+											"// Parse the saved response into a JavaScript object",
+											"const savedResponseObj = JSON.parse(savedResponse);",
+											"",
+											"// Add the new JSON object to the existing object",
+											"savedResponseObj.customer = ",
+											"    {",
+											"        \"id\": pm.variables.get(\"user_id\"),",
+											"        \"name\": pm.variables.get(\"user_first_name\"),",
+											"        \"surname\": pm.variables.get(\"user_last_name\")",
+											"    };",
+											"",
+											"// Convert the updated JavaScript object back to a JSON string",
+											"const updatedRequestBody = JSON.stringify(savedResponseObj);",
+											"",
+											"// Set the updated request body as a variable for use in the request body",
+											"pm.variables.set(\"contact_request_body\", updatedRequestBody);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Version",
+										"value": "v2",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{{contact_request_body}}"
+								},
+								"url": {
+									"raw": "{{api_url}}/customer-management/{{tenant}}/contacts/{{contact_id}}",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"customer-management",
+										"{{tenant}}",
+										"contacts",
+										"{{contact_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "10. Coupon",
+			"item": [
+				{
+					"name": "Create Coupon 10% OFF",
 					"event": [
 						{
 							"listen": "test",
@@ -1906,7 +2907,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"discountType\": \"PERCENT\",\n    \"categoryRestricted\": false,\n    \"name\": \"10% OFF\",\n    \"code\": \"10OFF\",\n    \"description\": \"10% OFF\",\n    \"discountPercentage\": \"10\"\n}"
+							"raw": "{\n    \"discountType\": \"PERCENT\",\n    \"categoryRestricted\": false,\n    \"name\": \"10% OFF\",\n    \"code\": \"SAVE10PERCENT\",\n    \"description\": \"10% OFF\",\n    \"discountPercentage\": \"10\"\n}"
 						},
 						"url": {
 							"raw": "{{api_url}}/coupon-v2/{{tenant}}/coupons",
@@ -1917,6 +2918,505 @@
 								"coupon-v2",
 								"{{tenant}}",
 								"coupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Coupon 100 OFF (EUR)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"discountType\": \"ABSOLUTE\",\n  \"discountAbsolute\": {\n    \"amount\": 100,\n    \"currency\": \"EUR\"\n  },\n  \"categoryRestricted\": false,\n  \"code\": \"SAVE100_EUR\",\n  \"name\": \"100 OFF\",\n  \"description\": \"100 OFF\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/coupon-v2/{{tenant}}/coupons",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"coupon-v2",
+								"{{tenant}}",
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Coupon 88 OFF (GBP)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"discountType\": \"ABSOLUTE\",\n  \"discountAbsolute\": {\n    \"amount\": 88,\n    \"currency\": \"GBP\"\n  },\n  \"categoryRestricted\": false,\n  \"code\": \"SAVE88_GBP\",\n  \"name\": \"88 OFF\",\n  \"description\": \"88 OFF\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/coupon-v2/{{tenant}}/coupons",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"coupon-v2",
+								"{{tenant}}",
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Coupon 110 OFF (USD)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"discountType\": \"ABSOLUTE\",\n  \"discountAbsolute\": {\n    \"amount\": 110,\n    \"currency\": \"USD\"\n  },\n  \"categoryRestricted\": false,\n  \"code\": \"SAVE110_USD\",\n  \"name\": \"110 OFF\",\n  \"description\": \"110 OFF\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/coupon-v2/{{tenant}}/coupons",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"coupon-v2",
+								"{{tenant}}",
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Coupon 400 OFF (SAR)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"discountType\": \"ABSOLUTE\",\n  \"discountAbsolute\": {\n    \"amount\": 400,\n    \"currency\": \"SAR\"\n  },\n  \"categoryRestricted\": false,\n  \"code\": \"SAVE400_SAR\",\n  \"name\": \"400 OFF\",\n  \"description\": \"400 OFF\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/coupon-v2/{{tenant}}/coupons",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"coupon-v2",
+								"{{tenant}}",
+								"coupons"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "11. Suppliers",
+			"item": [
+				{
+					"name": "Create Supplier Festool Österreich",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Festool Österreich GmbH\",\n    \"supplierNo\": \"11111a\",\n    \"customerNo\": \"22222a\",\n    \"street\": \"Schloss Glanegg 2\",\n    \"zipCode\": \"5082\",\n    \"city\": \"Grödig\",\n    \"countryId\": \"AT\",\n    \"contactPerson1\": \"Emily Jones\",\n    \"phone1\": \"+43 810 955314\",\n    \"email1\": \"emily.jones@festool.com\",\n    \"orderEmail1\": \"david.smith@festool.com\",\n    \"orderMethod\": \"SINGLE_PICKING\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/supplier/suppliers",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"supplier",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Supplier Festool Germany",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Festool GmbH\",\n    \"supplierNo\": \"11111b\",\n    \"customerNo\": \"22222b\",\n    \"street\": \"Wertstraße 20\",\n    \"zipCode\": \"73240\",\n    \"city\": \"Wendlingen\",\n    \"countryId\": \"DE\",\n    \"contactPerson1\": \"Madison Davis\",\n    \"phone1\": \"+49 (7024) 804 - 0\",\n    \"email1\": \"madison.davis@festool.com\",\n    \"orderEmail1\": \"matthew.garcia@festool.com\",\n    \"orderMethod\": \"SINGLE_PICKING\"\n}\n"
+						},
+						"url": {
+							"raw": "{{api_url}}/supplier/suppliers",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"supplier",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Supplier Festool USA+Canada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Tooltechnic Systems, LLC\",\n    \"supplierNo\": \"11111c\",\n    \"customerNo\": \"22222c\",\n    \"street\": \"400 N. Enterprise Blvd\",\n    \"zipCode\": \"46052\",\n    \"city\": \"Lebanon\",\n    \"countryId\": \"US\",\n    \"contactPerson1\": \"Olivia Wilson\",\n    \"phone1\": \"+1-888-337-8600\",\n    \"email1\": \"olivia.wilson@festoolcanada.com\",\n    \"orderEmail1\": \"ethan.lee@festoolcanada.com\",\n    \"orderMethod\": \"SINGLE_PICKING\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/supplier/suppliers",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"supplier",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Supplier Bosch USA",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Robert Bosch Tool Corporation\",\n    \"supplierNo\": \"11111d\",\n    \"customerNo\": \"22222d\",\n    \"street\": \"1800 West Central Road\",\n    \"zipCode\": \"60056\",\n    \"city\": \"Mount Prospect\",\n    \"countryId\": \"US\",\n    \"contactPerson1\": \"Ava Rodriguez\",\n    \"phone1\": \"(224) 232-2000\",\n    \"email1\": \"ava.rodriguez@bosch.com\",\n    \"orderEmail1\": \"liam.perez@bosch.com\",\n    \"orderMethod\": \"SINGLE_PICKING\"\n}\n"
+						},
+						"url": {
+							"raw": "{{api_url}}/supplier/suppliers",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"supplier",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Supplier U-Power Italy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"U-Power\",\n    \"supplierNo\": \"11111e\",\n    \"customerNo\": \"22222e\",\n    \"street\": \"Via Borgomanero, 50\",\n    \"zipCode\": \"28040\",\n    \"city\": \"Paruzzaro\",\n    \"countryId\": \"IT\",\n    \"contactPerson1\": \"Isabella Patel\",\n    \"phone1\": \"+39 0322 539401\",\n    \"email1\": \"isabella.patel@u-power.com\",\n    \"orderEmail1\": \"michael.kim@u-power.com\",\n    \"orderMethod\": \"SINGLE_PICKING\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/supplier/suppliers",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"supplier",
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Supplier STAHLWILLE Germany",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Version",
+								"value": "v2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Language",
+								"value": "*",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"STAHLWILLE Eduard Wille GmbH & Co. KG\",\n    \"supplierNo\": \"11111f\",\n    \"customerNo\": \"22222f\",\n    \"street\": \"Lindenallee 27\",\n    \"zipCode\": \"42349\",\n    \"city\": \"Wuppertal\",\n    \"countryId\": \"DE\",\n    \"contactPerson1\": \"Grace Nguyen\",\n    \"phone1\": \"+49 202 4791 0\",\n    \"email1\": \"grace.nguyen@stahlwille.de\",\n    \"orderEmail1\": \"samuel.lee@stahlwille.de\",\n    \"orderMethod\": \"SINGLE_PICKING\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/supplier/suppliers",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"supplier",
+								"suppliers"
 							]
 						}
 					},

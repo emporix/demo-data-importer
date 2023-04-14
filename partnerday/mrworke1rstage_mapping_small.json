@@ -86,10 +86,6 @@
         "emporixKey": "taxClasses.DE"
       },
       {
-        "csvKey": "Tax IT",
-        "emporixKey": "taxClasses.IT"
-      },
-      {
         "csvKey": "Pricing Measure value",
         "emporixKey" : "mixins.productCustomAttributes.pricingMeasure.value",
         "type" : "NUMBER"
@@ -119,52 +115,7 @@
         "csvKey" : "T-shirt size",
         "variantAttribute" : true,
         "emporixKey" : "size"
-      },
-      {
-        "csvKey" : "Shoes size",
-        "variantAttribute" : true,
-        "emporixKey" : "size",
-        "type" : "NUMBER"
-      },
-      {
-        "csvKey" : "Dimension",
-        "variantAttribute" : true,
-        "emporixKey" : "dimension"
-      },
-      {
-        "csvKey" : "Wrench dimension",
-        "variantAttribute" : true,
-        "emporixKey" : "dimension",
-        "type" : "NUMBER"
-      },
-      {
-        "csvKey" : "Head screw size",
-        "variantAttribute" : true,
-        "emporixKey" : "head-screw-size",
-        "valueSeparator" : ";"
-      },
-      {
-        "csvKey" : "Inhex",
-        "variantAttribute" : true,
-        "emporixKey" : "inhex"
-      },
-      {
-        "csvKey" : "External hex",
-        "variantAttribute" : true,
-        "emporixKey" : "external-hex"
-      },
-      {
-        "csvKey" : "Pipe cutter dimensions",
-        "variantAttribute" : true,
-        "emporixKey" : "dimension",
-        "type" : "NUMBER"
-      },
-      {
-        "csvKey" : "Number of cutting wheels",
-        "variantAttribute" : true,
-        "emporixKey" : "number-of-cutting-wheels",
-        "type" : "NUMBER"
-      },      
+      },   
       {
         "csvKey" : "PowerZone mixins",
         "emporixKey" : "metadata.mixins.powerzoneAttributes"
@@ -251,7 +202,7 @@
     "columns" : ["Image 1", "Image 2", "Image 3"]
   },
   "categories" : {
-    "catalog" : "642d7625e1736214766444d5",
+    "catalog" : "63ed2f2727725d28922c31ee",
     "categoryTree" : {
       "csvKey" : "Name category EN",
       "separator" : " > "
@@ -310,7 +261,7 @@
         ]
       },
       {
-        "siteCode" : "main",
+        "siteCode" : "US",
         "currency" : "EUR",
         "location" : "US",
         "tiers" : [
@@ -352,28 +303,6 @@
             "csvKey" : "DE Price Tier 5 - 100 pc"
           }
         ]
-      },
-      {
-        "siteCode" : "DE",
-        "currency" : "EUR",
-        "location" : "IT",
-        "tiers" : [
-          {
-            "csvKey" : "IT Price Tier 1 - 0 pc"
-          },
-          {
-            "csvKey" : "IT Price Tier 2 - 10 pc"
-          },
-          {
-            "csvKey" : "IT Price Tier 3 - 20 pc"
-          },
-          {
-            "csvKey" : "IT Price Tier 4 - 50 pc"
-          },
-          {
-            "csvKey" : "IT Price Tier 5 - 100 pc"
-          }
-        ]
       }
     ]
   },
@@ -383,7 +312,7 @@
     },
     "sites" : [
       {
-        "siteCode" : "main",
+        "siteCode" : "US",
         "csvKey" : "Stock US"
       },
       {

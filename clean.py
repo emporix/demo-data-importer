@@ -52,18 +52,18 @@ def main(argv=None):
 
     token = get_access_token(apiUrl, tenant, clientId, clientSecret)
 
+    if "availabilities" in clean:
+      print("Starting availabilities clean-up...")
+      clean_availabilities(apiUrl, tenant, token, mapping)
+    if "prices" in clean:
+      print("Starting prices clean-up...")
+      clean_prices(apiUrl, tenant, token)
     if "products" in clean:
       print("Starting products clean up...")
       clean_products(apiUrl, tenant, token)
     if "categories" in clean:
       print("Starting categories clean-up...")
       clean_categories(apiUrl, tenant, token, mapping)
-    if "prices" in clean:
-      print("Starting prices clean-up...")
-      clean_prices(apiUrl, tenant, token)
-    if "availabilities" in clean:
-      print("Starting availabilities clean-up...")
-      clean_availabilities(apiUrl, tenant, token, mapping)
 
 def get_access_token(apiUrl, tenant, clientId, clientSecret):
     r = http.post(f'{apiUrl}/oauth/token',

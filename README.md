@@ -22,7 +22,7 @@ csv file for product entity can have any structure. Nevertheless, it needs to ha
 * a column for product template id (valid for PARENT_VARIANT)
 * a column for product template version (valid for PARENT_VARIANT)
 * a column for product parent id (valid for VARIANT)
-* a columns for product tax configuration (one column for each supported country)
+* a columns for product tax configuration (one column for each supported site/country)
 * a column for variant attributes (PARENT_VARIANT should contain all possible values in the cell, VARIANT should have single value in the cell)
 
 As a referral example, the following google sheet tab (Products) can be used: https://docs.google.com/spreadsheets/d/1EIvwUbtks9uKCl6tTcEFtHa8zzq5K04wehz3-E-CTNI/edit?usp=sharing
@@ -41,20 +41,18 @@ csv file for price entity should have the following columns:
 
 As a referral example, the following google sheet tab (Prices) can be used: https://docs.google.com/spreadsheets/d/1EIvwUbtks9uKCl6tTcEFtHa8zzq5K04wehz3-E-CTNI/edit?usp=sharing
 
-## NOTE! All the google sheets tabs (Products, Categories & Prices) have to be exported into csv file in order to run the import!
-
-## Another small example product (Basic, Variant and Bundle) google sheet import file: https://docs.google.com/spreadsheets/d/1bqFZerL5Nfy49vzjumekmWUWDWoSaJgruE5iGaUtzZY/edit?usp=sharing
+### NOTE
+* All the google sheets tabs (Products, Categories & Prices) have to be exported into csv file in order to run the import!
+* Another small example product (Basic, Variant and Bundle) google sheet import file: https://docs.google.com/spreadsheets/d/1bqFZerL5Nfy49vzjumekmWUWDWoSaJgruE5iGaUtzZY/edit?usp=sharing
+* The script doesn't support yet the product catalog updates. Please use clean.py and re-import the catalog
 
 ### Configuration (mapping) file
-As a reference have a look at `powerzone/powerzone_mapping.json`.
+* As a reference have a look at `powerzone/powerzone_mapping.json`.
+* You need to replace with the Catalog ID where all the Top categories will be attached to: "catalog" : "<The catalog ID needs to exist>". To get the catalog ID, click on this URL and then on the catalog: https://dashboard.emporix.io/apps/management/catalogs/
 
-Note: You need to replace with the Catalog ID where all the Top categories will be attached to:
-"catalog" : "<The catalog ID needs to exist>",
-To get the catalog ID, click on this URL and then on the catalog: https://stage-admin-v2.emporix.io/apps/management/catalogs/
-
+### Mapping:
 The configuration has 5 main parts (products, images, categories, prices and availabilities).
 Empty template of the mapping has the following structure:
-
 ```json
 {
   "products": {
@@ -118,5 +116,3 @@ Empty template of the mapping has the following structure:
   }
 }
 ```
-
-#### Products
