@@ -80,9 +80,12 @@ def prepare_payload(item, mapping, site, productId):
 
 def persist_price(apiUrl, tenant, accessToken, payload):
     r = http.post(f'{apiUrl}/price/{tenant}/prices',
+      #json = json.dumps(payload), NBER Change that
       json = payload,
       headers = {'Authorization' : f'Bearer {accessToken}', 'X-Version' : 'v2'})
     response = r.json()
     print(response)
-    r.raise_for_status()
+    if r.status_code not in (200, 201, 204):
+        print(f"Error: {r.status_code} - {r.text}")
+        r.raise_for_status()
     return response

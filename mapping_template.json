@@ -21,10 +21,10 @@
     "columns" : []
   },
   "categories" : {
-    "categoryTree" : {
+    "categoryTree" : [{
       "csvKey" : "",
       "separator" : ""
-    },
+    }],
     "productAssignment" : {
       "csvKey" : ""
     }

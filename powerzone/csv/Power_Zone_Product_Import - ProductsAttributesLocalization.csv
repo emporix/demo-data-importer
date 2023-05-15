@@ -1,0 +1,17 @@
+﻿Attribute Key,Attribute type,Attribute name [de],Attribute name [de],Attribute name [fr]
+EAN,STRING,EAN,EAN,EAN
+Depth mm,DECIMAL,Depth mm,Tiefe mm,Profondeur mm
+Width mm,DECIMAL,Width mm,Breite mm,Largeur mm
+Height mm,DECIMAL,Height mm,Höhe mm,Hauteur mm
+Weight Kg PS,DECIMAL,Weight Kg PS,Gewicht Kg PS,Poids Kg PS
+Weight Kg product,DECIMAL,Weight Kg product,Gewicht Kg Produkt,Poids Kg produit
+PDF data sheet,STRING,PDF data sheet,PDF-Datenblatt,Fiche technique PDF
+Link video YouTube,STRING,Link video YouTube,Link Video YouTube,Lien vidéo YouTube
+Customs codes,STRING,Customs codes,Zollcodes,Codes douaniers
+Country of origin,STRING,Country of origin,Herkunftsland,Pays d'origine
+Lithium battery,BOOLEAN,Lithium battery,Lithium-Batterie,Pile au lithium
+Minimum purchase to the supplier,DECIMAL,Minimum purchase to the supplier,Mindestabnahme an den Lieferanten,Achat minimum au fournisseur
+Pieces per pack,DECIMAL,Pieces per pack,Stückzahl pro Packung,Nombre de pièces par paquet
+Number of packs,DECIMAL,Number of packs,Anzahl der Packungen,Nombre de paquets
+Total pieces,DECIMAL,Total pieces,Gesamte Stückzahl,Nombre total de pièces
+Blades,BOOLEAN,Blades,Klingen,Lames

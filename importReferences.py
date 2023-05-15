@@ -26,7 +26,7 @@ def brand_reference(apiUrl, tenant, accessToken, attributeConfig, brandName):
   if brandName in brand_cache:
     return brand_cache[brandName]
 
-  r = http.get(f'{apiUrl}/brand/brands?q=name:{brandName}',
+  r = http.get(f'{apiUrl}/brand/brands?q=name:"{brandName}"',
         headers = {'Authorization' : f'Bearer {accessToken}'})
   response = r.json()
   if response:

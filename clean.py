@@ -69,9 +69,24 @@ def get_access_token(apiUrl, tenant, clientId, clientSecret):
     r = http.post(f'{apiUrl}/oauth/token',
       data = {'grant_type' : 'client_credentials', 'client_id' : clientId, 'client_secret' : clientSecret},
       headers = {'Content-Type' : 'application/x-www-form-urlencoded'})
-    r.raise_for_status()
+    if r.status_code not in (200, 201, 204):
+        print(f"Error: {r.status_code} - {r.text}")
+        r.raise_for_status()
     json = r.json()
     return json['access_token']
+
+def delete_product_images(apiUrl, tenant, token, productId):
+  r = http.get(f'{apiUrl}/media/{tenant}/assets?q=refIds.id:{productId}', headers = {'Authorization' : f'Bearer {token}'})
+  product_images = r.json()
+  if product_images:
+    for product_image in product_images:
+      product_image_id = product_image['id']
+      try:
+        deleteResponse = http.delete(f'{apiUrl}/media/{tenant}/assets/{product_image_id}', headers = {'Authorization' : f'Bearer {token}'})
+        deleteResponse.raise_for_status()
+      except Exception as e:
+        print(f"Issue with deleting product image ID: {product_image_id}")
+        logging.error(traceback.format_exc())
 
 def clean_products(apiUrl, tenant, token):
    clean_variant_products(apiUrl, tenant, token)
@@ -88,6 +103,7 @@ def clean_basic_products(apiUrl, tenant, token):
       productId = product['id']
       print(f"deleting product: {productId}")
       try:
+        delete_product_images(apiUrl, tenant, token, productId)
         deleteResponse = http.delete(f'{apiUrl}/product/{tenant}/products/{productId}?sort=', headers = {'Authorization' : f'Bearer {token}'})
         deleteResponse.raise_for_status()
       except Exception as e:
@@ -104,6 +120,7 @@ def clean_variant_products(apiUrl, tenant, token):
       productId = product['id']
       print(f"deleting product: {productId}")
       try:
+        delete_product_images(apiUrl, tenant, token, productId)
         deleteResponse = http.delete(f'{apiUrl}/product/{tenant}/products/{productId}?sort=', headers = {'Authorization' : f'Bearer {token}'})
         deleteResponse.raise_for_status()
       except Exception as e:
@@ -120,6 +137,7 @@ def clean_parent_variant_products(apiUrl, tenant, token):
       productId = product['id']
       print(f"deleting product: {productId}")
       try:
+        delete_product_images(apiUrl, tenant, token, productId)
         deleteResponse = http.delete(f'{apiUrl}/product/{tenant}/products/{productId}?sort=', headers = {'Authorization' : f'Bearer {token}'})
         deleteResponse.raise_for_status()
       except Error:
@@ -156,7 +174,8 @@ def clean_categories(apiUrl, tenant, token, mapping):
       print(f"deleting category: {categoryId}")
       try:
         deleteResponse = http.delete(f'{apiUrl}/category/{tenant}/categories/{categoryId}?withSubcategories=true', headers = {'Authorization' : f'Bearer {token}',  'X-Version' : 'v2'})
-        deleteResponse.raise_for_status()
+        if deleteResponse.status_code not in (200, 201, 204, 404):
+          deleteResponse.raise_for_status()
       except Exception as e:
         print(f"Issue with deleting category {categoryId}")
         logging.error(traceback.format_exc())
@@ -189,14 +208,17 @@ def clean_availabilities_for_site(apiUrl, tenant, token, site):
 def clean_root_category_to_catalog(apiUrl, tenant, accessToken, mapping):
     print("Cleaning root category assignments")
     if 'catalog' in mapping['categories']:
-      catalogId = mapping['categories']['catalog']
+      catalogName = mapping['categories']['catalog']
+      r = http.get(f'{apiUrl}/catalog/{tenant}/catalogs?name={catalogName}', headers = {'Authorization' : f'Bearer {accessToken}'})
+      currentCatalog = r.json()
+      if currentCatalog:
+        catalogId = currentCatalog[0]["id"]
+      else:
+        raise Exception(f"Error: The main category {catalogName} doesn't exist. Please create it or change the mapping file accordingly.")
       r = http.get(f'{apiUrl}/catalog/{tenant}/catalogs/{catalogId}', headers = {'Authorization' : f'Bearer {accessToken}'})
       currentCatalog = r.json()
       currentCatalog['categoryIds'] = []
-      r2 = http.put(f'{apiUrl}/catalog/{tenant}/catalogs/{catalogId}',
-       json = currentCatalog,
-       headers = {'Authorization' : f'Bearer {accessToken}'})
-
+      r2 = http.put(f'{apiUrl}/catalog/{tenant}/catalogs/{catalogId}', json = currentCatalog, headers = {'Authorization' : f'Bearer {accessToken}'})
 
 if __name__ == '__main__':
     sys.exit(main() or 0)

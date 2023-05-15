@@ -61,7 +61,10 @@ def construct_product_id(productDatabase, mapping, productId):
 
 def prepare_payload(item, mapping, site, productId):
   siteCode = site['siteCode']
-  stockLevel = int(item[site['csvKey']])
+  try:
+    stockLevel = int(item[site['csvKey']])
+  except ValueError:
+    stockLevel = 0
 
   payload = {
           "site" : siteCode,
@@ -79,5 +82,7 @@ def persist_availability(apiUrl, tenant, accessToken, payload, productId,site):
       headers = {'Authorization' : f'Bearer {accessToken}'})
     response = r.json()
     print(response)
-    r.raise_for_status()
+    if r.status_code not in (200, 201, 204):
+        print(f"Error: {r.status_code} - {r.text}")
+        r.raise_for_status()
     return response

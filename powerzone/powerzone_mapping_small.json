@@ -206,10 +206,15 @@
     "columns" : ["Image 1", "Image 2", "Image 3"]
   },
   "categories" : {
-    "catalog" : "63ed2f2727725d28922c31ee",
+    "catalog" : "Powerzone",
     "categoryTree" : {
       "csvKey" : "Name category EN",
-      "separator" : " > "
+      "separator" : " > ",
+      "localizedNames" : {
+        "en" : "Name category EN",
+        "de" : "Name category DE",
+        "fr" : "Name category FR"
+      }
     },
     "productAssignment" : {
       "csvKey" : "SKU"

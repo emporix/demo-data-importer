@@ -88,7 +88,9 @@ def get_access_token(apiUrl, tenant, clientId, clientSecret):
     r = http.post(f'{apiUrl}/oauth/token',
       data = {'grant_type' : 'client_credentials', 'client_id' : clientId, 'client_secret' : clientSecret},
       headers = {'Content-Type' : 'application/x-www-form-urlencoded'})
-    r.raise_for_status()
+    if r.status_code not in (200, 201, 204):
+        print(f"Error: {r.status_code} - {r.text}")
+        r.raise_for_status()
     json = r.json()
     return json['access_token']
 

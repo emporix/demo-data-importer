@@ -30,49 +30,70 @@ def import_categories(mappingFile, productCsvFile, csvFile, apiUrl, tenant, acce
 def create_category_tree(apiUrl, tenant, accessToken, mapping, database):
     createdCategories = {}
     categoriesTrees = find_all_categories_trees(mapping, database)
-    for categoryTree in categoriesTrees:
-      create_categories(apiUrl, tenant, accessToken, mapping, categoryTree, createdCategories)
+    for key in categoriesTrees:
+      create_categories(apiUrl, tenant, accessToken, mapping, key, categoriesTrees[key], createdCategories)
     return createdCategories
 
 def find_all_categories_trees(mapping, database):
-    categoriesWithoutDuplicates = set()
+    categoriesWithoutDuplicates = {}
     for item in database:
-      categoriesWithoutDuplicates.add(item[mapping['categories']['categoryTree']['csvKey']])
+      categoriesWithoutDuplicates[item[mapping['categories']['categoryTree']['csvKey']]] = item
     return categoriesWithoutDuplicates
 
-def create_categories(apiUrl, tenant, accessToken, mapping, categoryTree, createdCategories):
+def create_categories(apiUrl, tenant, accessToken, mapping, categoryTree, categoryRow, createdCategories):
     categories = categoryTree.split(mapping['categories']['categoryTree']['separator'])
     parent = None
     for category in categories:
       if category not in createdCategories:
-        payload = prepare_category_payload(parent, category)
+        categoryNames = create_localized_names(mapping, category, categoryRow, categories.index(category))
+        payload = prepare_category_payload(parent, categoryNames)
         persistedCategory = persist_category(apiUrl, tenant, accessToken, payload)
         createdCategories[category] = { 'id' : persistedCategory['id'], 'categoryTree' : categoryTree }
         if parent == None:
-          print("Assigning the category to catalog")
           assign_root_category_to_catalog(apiUrl, tenant, accessToken, mapping, persistedCategory['id'])
         parent = persistedCategory['id']
       else:
         parent = createdCategories[category]['id']
 
+def create_localized_names(mapping, categoryName, categoryRow, index):
+    localizedName = {}
+    if 'localizedNames' in mapping['categories']['categoryTree']:
+       for lang in mapping['categories']['categoryTree']['localizedNames']:
+          csvColumnKey = mapping['categories']['categoryTree']['localizedNames'][lang]
+          localizedTree = categoryRow[csvColumnKey].split(mapping['categories']['categoryTree']['separator'])
+          if len(localizedTree) > index:
+            localizedName[lang] = localizedTree[index]
+    else:
+      localizedName["en"] = categoryName
+    return localizedName
+
 def assign_root_category_to_catalog(apiUrl, tenant, accessToken, mapping, categoryId):
     if 'catalog' in mapping['categories']:
-      catalogId = mapping['categories']['catalog']
+      catalogName = mapping['categories']['catalog']
+      r = http.get(f'{apiUrl}/catalog/{tenant}/catalogs?name={catalogName}', headers = {'Authorization' : f'Bearer {accessToken}'})
+      response = r.json()
+      if response:
+        catalogId = response[0]["id"]
+      else:
+        raise Exception(f"Error: The main category {catalogName} doesn't exist. Please create it or change the mapping file accordingly.")
+
       r = http.get(f'{apiUrl}/catalog/{tenant}/catalogs/{catalogId}', headers = {'Authorization' : f'Bearer {accessToken}'})
-      currentCatalog = r.json()
-      print(json.dumps(currentCatalog))
-      if 'categoryIds' not in currentCatalog:
-        currentCatalog['categoryIds'] = []
-      currentCatalog['categoryIds'].append(categoryId)
-      print("updating")
-      print(json.dumps(currentCatalog))
+      response = r.json()
+      if  r.status_code == 404:
+        print("\n\nError occurred while assigning the category to catalog. Details: {}\n\n".format(response))
+        r.raise_for_status()
+      if 'categoryIds' not in response:
+        response['categoryIds'] = []
+      response['categoryIds'].append(categoryId)
       r2 = http.put(f'{apiUrl}/catalog/{tenant}/catalogs/{catalogId}',
-       json = currentCatalog,
+       json = response,
        headers = {'Authorization' : f'Bearer {accessToken}'})
+      r2.raise_for_status()
+      if r2.status_code == 400:
+        print("\n\nError occurred while assigning the category to catalog. Details: {}\n\n".format(r2.json()))
 
 
 def create_category_assignments(apiUrl, tenant, accessToken, mapping, database, productDatabase, persistedCategories):
-   print(persistedCategories)
    for item in database:
       tree = item[mapping['categories']['categoryTree']['csvKey']]
       leaf = tree.split(mapping['categories']['categoryTree']['separator'])[-1]
@@ -98,12 +119,10 @@ def construct_product_id(productDatabase, mapping, productId):
           return productId
   return None
 
-def prepare_category_payload(parentId, categoryName):
+def prepare_category_payload(parentId, localizedNames):
   return {
       "parentId" : parentId,
-      "localizedName" : {
-        "en" : categoryName
-      },
+      "localizedName" : localizedNames,
       "published" : True
   }
 
@@ -115,21 +134,30 @@ def prepare_category_assignment_payload(productId):
       }
   }
 
-
 def persist_category(apiUrl, tenant, accessToken, payload):
     r = http.post(f'{apiUrl}/category/{tenant}/categories?publish=true',
       json = payload,
-      headers = {'Authorization' : f'Bearer {accessToken}', 'X-Version' : 'v2'})
-    r.raise_for_status()
+      headers = {'Authorization' : f'Bearer {accessToken}', 'X-Version' : 'v2', 'Content-Language': '*'})
     response = r.json()
-    print(response)
+    if r.status_code == 400:
+      print("\n\nError occurred during category creation")
+      print(response)
+      print("for the following payload")
+      print("{}\n\n".format(payload))
+    else:
+      print("Created category for the following payload: {}".format(payload))
     return response
 
 def persist_category_assignment(apiUrl, tenant, accessToken, categoryId, payload):
     r = http.post(f'{apiUrl}/category/{tenant}/categories/{categoryId}/assignments',
       json = payload,
       headers = {'Authorization' : f'Bearer {accessToken}', 'X-Version' : 'v2'})
-    r.raise_for_status()
     response = r.json()
-    print(response)
+    if r.status_code == 400:
+      print("\n\nError occurred during category assignment creation")
+      print(response)
+      print("for the following payload")
+      print("{}\n\n".format(payload))
+    else:
+      print("Created category assignment {} for product={} and category={}".format(response, categoryId, payload["ref"]["id"]))
     return response

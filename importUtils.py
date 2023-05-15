@@ -9,7 +9,7 @@ def read_json(path):
 
 def csv_to_json(csvFilePath, jsonFilePath):
     jsonArray = []
-    with open(csvFilePath, encoding='utf-8') as csvf:
+    with open(csvFilePath, encoding='utf-8-sig') as csvf:
         csvReader = csv.DictReader(csvf)
         for row in csvReader:
             jsonArray.append(row)
