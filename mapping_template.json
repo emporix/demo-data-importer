@@ -1,5 +1,9 @@
 {
   "products": {
+    "config" : {
+      "batchSize" : 500,
+      "numberOfThreads" : 10
+    },
     "identifier" : {
       "csvKey": ""
     },
