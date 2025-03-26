@@ -2910,12 +2910,12 @@
 							"raw": "{\n    \"discountType\": \"PERCENT\",\n    \"categoryRestricted\": false,\n    \"name\": \"10% OFF\",\n    \"code\": \"SAVE10PERCENT\",\n    \"description\": \"10% OFF\",\n    \"discountPercentage\": \"10\"\n}"
 						},
 						"url": {
-							"raw": "{{api_url}}/roupon/{{tenant}}/coupons",
+							"raw": "{{api_url}}/coupon/{{tenant}}/coupons",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
-								"roupon",
+								"coupon",
 								"{{tenant}}",
 								"coupons"
 							]
@@ -2960,12 +2960,12 @@
 							"raw": "{\n  \"discountType\": \"ABSOLUTE\",\n  \"discountAbsolute\": {\n    \"amount\": 100,\n    \"currency\": \"EUR\"\n  },\n  \"categoryRestricted\": false,\n  \"code\": \"SAVE100_EUR\",\n  \"name\": \"100 OFF\",\n  \"description\": \"100 OFF\"\n}"
 						},
 						"url": {
-							"raw": "{{api_url}}/roupon/{{tenant}}/coupons",
+							"raw": "{{api_url}}/coupon/{{tenant}}/coupons",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
-								"roupon",
+								"coupon",
 								"{{tenant}}",
 								"coupons"
 							]
@@ -3010,12 +3010,12 @@
 							"raw": "{\n  \"discountType\": \"ABSOLUTE\",\n  \"discountAbsolute\": {\n    \"amount\": 88,\n    \"currency\": \"GBP\"\n  },\n  \"categoryRestricted\": false,\n  \"code\": \"SAVE88_GBP\",\n  \"name\": \"88 OFF\",\n  \"description\": \"88 OFF\"\n}"
 						},
 						"url": {
-							"raw": "{{api_url}}/roupon/{{tenant}}/coupons",
+							"raw": "{{api_url}}/coupon/{{tenant}}/coupons",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
-								"roupon",
+								"coupon",
 								"{{tenant}}",
 								"coupons"
 							]
@@ -3060,12 +3060,12 @@
 							"raw": "{\n  \"discountType\": \"ABSOLUTE\",\n  \"discountAbsolute\": {\n    \"amount\": 110,\n    \"currency\": \"USD\"\n  },\n  \"categoryRestricted\": false,\n  \"code\": \"SAVE110_USD\",\n  \"name\": \"110 OFF\",\n  \"description\": \"110 OFF\"\n}"
 						},
 						"url": {
-							"raw": "{{api_url}}/roupon/{{tenant}}/coupons",
+							"raw": "{{api_url}}/coupon/{{tenant}}/coupons",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
-								"roupon",
+								"coupon",
 								"{{tenant}}",
 								"coupons"
 							]
@@ -3110,12 +3110,12 @@
 							"raw": "{\n  \"discountType\": \"ABSOLUTE\",\n  \"discountAbsolute\": {\n    \"amount\": 400,\n    \"currency\": \"SAR\"\n  },\n  \"categoryRestricted\": false,\n  \"code\": \"SAVE400_SAR\",\n  \"name\": \"400 OFF\",\n  \"description\": \"400 OFF\"\n}"
 						},
 						"url": {
-							"raw": "{{api_url}}/roupon/{{tenant}}/coupons",
+							"raw": "{{api_url}}/coupon/{{tenant}}/coupons",
 							"host": [
 								"{{api_url}}"
 							],
 							"path": [
-								"roupon",
+								"coupon",
 								"{{tenant}}",
 								"coupons"
 							]
