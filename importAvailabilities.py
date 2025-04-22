@@ -77,7 +77,7 @@ def prepare_payload(item, mapping, site, productId):
   return payload
 
 def persist_availability(apiUrl, tenant, accessToken, payload, productId,site):
-    r = http.post(f'{apiUrl}/availability/{tenant}/availability/{productId}?site={site}',
+    r = http.post(f'{apiUrl}/availability/{tenant}/availability/{productId}/{site}',
       json = payload,
       headers = {'Authorization' : f'Bearer {accessToken}'})
     response = r.json()
