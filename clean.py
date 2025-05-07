@@ -189,7 +189,7 @@ def clean_availabilities(apiUrl, tenant, token, mapping):
 
 def clean_availabilities_for_site(apiUrl, tenant, token, site):
   while True:
-    r = http.get(f'{apiUrl}/availability/{tenant}/availability?site={site}', headers = {'Authorization' : f'Bearer {token}'})
+    r = http.get(f'{apiUrl}/availability/{tenant}/availability/site/{site}', headers = {'Authorization' : f'Bearer {token}'})
     availabilities = r.json()
     if not availabilities:
       break
@@ -199,7 +199,7 @@ def clean_availabilities_for_site(apiUrl, tenant, token, site):
       productId = availability['productId']
       print(f"deleting availability: {availabilityId}")
       try:
-        deleteResponse = http.delete(f'{apiUrl}/availability/{tenant}/availability/{productId}?site={site}', headers = {'Authorization' : f'Bearer {token}'})
+        deleteResponse = http.delete(f'{apiUrl}/availability/{tenant}/availability/{productId}/{site}', headers = {'Authorization' : f'Bearer {token}'})
         deleteResponse.raise_for_status()
       except Exception as e:
         print(f"Issue while deleting availability {availabilityId}")
